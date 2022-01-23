@@ -1,0 +1,4 @@
+main: walkmc.animation.Plugin
+version: 1.0
+author: uin
+name: Animation-API
