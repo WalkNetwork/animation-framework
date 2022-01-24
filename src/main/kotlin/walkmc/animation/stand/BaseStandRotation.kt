@@ -1,7 +1,5 @@
-package walkmc.animation.rotation
+package walkmc.animation.stand
 
-import net.minecraft.server.*
-import walkmc.animation.*
 import walkmc.animation.interfaces.*
 
 /**
@@ -9,7 +7,7 @@ import walkmc.animation.interfaces.*
  *
  * This works like a skeletal model for any stand rotation animation.
  */
-abstract class BaseStandRotation(world: World?) : BaseStandAnimation(world), Rotatable {
+abstract class BaseStandRotation : BaseStandAnimation(), Rotatable {
    
    override var rotations = 0
    override var maxRotations = Int.MAX_VALUE

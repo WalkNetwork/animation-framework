@@ -3,14 +3,15 @@ package walkmc.animation.sub
 import org.bukkit.*
 import walkmc.*
 import walkmc.animation.*
+import walkmc.animation.interfaces.*
 
 /**
  * Represents a particle path sub animation.
  */
-open class ParticlePath(var particle: Particle, val path: List<Location>) : SubAnimation {
+open class ParticlePath(var particle: Particle, val path: List<Location>) : SubPrimaryAnimation {
    var current = 0
    
-   override fun animate(primary: Animation) {
+   override fun animate(animation: Animation, ticker: Tick) {
       if (current >= path.size) current = 0
       particle.play(path[current++])
    }

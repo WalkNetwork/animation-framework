@@ -1,15 +1,17 @@
-package walkmc.animation.moveable
+package walkmc.animation.impl
 
-import net.minecraft.server.World
 import org.bukkit.*
-import org.bukkit.inventory.ItemStack
+import org.bukkit.entity.*
+import org.bukkit.inventory.*
 import walkmc.animation.*
+import walkmc.animation.extensions.*
+import walkmc.animation.stand.*
 import walkmc.extensions.*
 
 /**
  * Represents a moveable stand animation.
  */
-open class MoveableAnimation(world: World?) : BaseStandAnimation(world) {
+open class MoveableAnimation : BaseStandAnimation() {
    
    var count = 0
    var max = 20
@@ -35,8 +37,14 @@ open class MoveableAnimation(world: World?) : BaseStandAnimation(world) {
    }
    
    override fun withItem(item: ItemStack) {
-      setEquipment(4, item.handlerCopy())
+      head = item
    }
+   
+   override fun click(player: Player, slot: Int) {
+      if (slot == 4) for (clicker in clickers) clicker(player, slot)
+   }
+   
+   override fun offset() = localization up headHeight + 0.15
    
    fun relative(location: Location): Location {
       return if (!isInReverseOrder) {
@@ -53,7 +61,7 @@ open class MoveableAnimation(world: World?) : BaseStandAnimation(world) {
  * ### Note: the animation will be automatically started.
  */
 inline fun moveableAnimation(location: Location, block: MoveableAnimation.() -> Unit): MoveableAnimation {
-   return MoveableAnimation(null).apply {
+   return MoveableAnimation().apply {
       block()
       spawnInWorld(location, false)
       start()
@@ -72,7 +80,7 @@ inline fun moveableAnimation(
    stopAfter: Int,
    block: MoveableAnimation.() -> Unit
 ): MoveableAnimation {
-   return MoveableAnimation(null).apply {
+   return MoveableAnimation().apply {
       block()
       stopAfter(stopAfter * 20)
       spawnInWorld(location, false)

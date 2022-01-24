@@ -1,29 +1,35 @@
-package walkmc.animation.moveable
+package walkmc.animation.impl
 
-import net.minecraft.server.World
 import org.bukkit.*
-import org.bukkit.inventory.ItemStack
-import walkmc.*
+import org.bukkit.entity.*
+import org.bukkit.inventory.*
 import walkmc.animation.*
+import walkmc.animation.extensions.*
+import walkmc.animation.stand.*
 import walkmc.collections.*
 import walkmc.extensions.*
-import walkmc.shape.*
 
 /**
  * Represents a stand teleport animation.
  */
-open class TeleportAnimation(world: World?) : BaseStandAnimation(world) {
+open class TeleportAnimation : BaseStandAnimation() {
    
    var phases = IndexList<Location>()
    
    override fun tick() {
+      move(phases.toNextOrFirst())
       super.tick()
-      teleportTo(phases.toNextOrFirst(), false)
    }
    
    override fun withItem(item: ItemStack) {
-      setEquipment(4, item.handlerCopy())
+      head = item
    }
+   
+   override fun click(player: Player, slot: Int) {
+      if (slot == 4) for (clicker in clickers) clicker(player, slot)
+   }
+   
+   override fun offset() = localization up headHeight + 0.15
    
    fun addPhase(location: Location) {
       phases += location
@@ -36,7 +42,7 @@ open class TeleportAnimation(world: World?) : BaseStandAnimation(world) {
  * ### Note: the animation will be automatically started.
  */
 inline fun teleportAnimation(location: Location, block: TeleportAnimation.() -> Unit): TeleportAnimation {
-   return TeleportAnimation(null).apply {
+   return TeleportAnimation().apply {
       block()
       spawnInWorld(location, false)
       start()
@@ -55,27 +61,10 @@ inline fun teleportAnimation(
    stopAfter: Int,
    block: TeleportAnimation.() -> Unit
 ): TeleportAnimation {
-   return TeleportAnimation(null).apply {
+   return TeleportAnimation().apply {
       block()
       stopAfter(stopAfter * 20)
       spawnInWorld(location, false)
       start()
    }
-}
-
-
-fun main() {
-   val location by notnull<Location>()
-   
-   moveableAnimation(location, 10) {
-      allowReverseOrder = true
-      max = 20
-      onTick { Particle.FLAME.play(localization down 0.4) }
-   }
-   
-   teleportAnimation(location, 10) {
-      phases += location.drawCirclePath(3.0, 25)
-      withMaterial(Materials.REDSTONE)
-   }
-   
 }

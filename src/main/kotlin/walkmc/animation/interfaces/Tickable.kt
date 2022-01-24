@@ -8,12 +8,7 @@ import walkmc.ticker.*
 interface Tickable : Ticker {
    
    /**
-    * Delay between [tick] calls.
-    */
-   var delay: Int
-   
-   /**
     * Amount of ticks elapsed.
     */
-   var ticks: Int
+   val ticks: Int
 }
