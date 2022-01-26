@@ -110,7 +110,7 @@ emptyAnimation(location) {
 
 ```kt
 emptyAnimation(location) {
-  // add helix path sub animation
+  // add tornado path sub animation
   tornado(Particle.FLAME) {
     maxHeight = 20.0
     lines = 6
