@@ -105,5 +105,6 @@ tasks {
 		baseName = project.name
 		version = project.version.toString()
 		relocate("net.minecraft.server", "net.minecraft.server.v1_8_R3")
+		relocate("org.bukkit.craftbukkit", "org.bukkit.craftbukkit.v1_8_R3")
 	}
 }

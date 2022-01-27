@@ -39,8 +39,9 @@ open class ItemRotation : BaseStandRotation() {
  */
 inline fun itemRotation(location: Location, block: ItemRotation.() -> Unit): ItemRotation {
    return ItemRotation().apply {
+      setLocation(location)
       block()
-      spawnInWorld(location, false)
+      spawn()
       start()
    }
 }
@@ -54,9 +55,10 @@ inline fun itemRotation(location: Location, block: ItemRotation.() -> Unit): Ite
  */
 inline fun itemRotation(location: Location, stopAfter: Int, block: ItemRotation.() -> Unit): ItemRotation {
    return ItemRotation().apply {
+      setLocation(location)
       block()
       stopAfter(stopAfter * 20)
-      spawnInWorld(location, false)
+      spawn()
       start()
    }
 }

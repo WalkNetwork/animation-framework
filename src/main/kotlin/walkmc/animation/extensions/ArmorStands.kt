@@ -212,3 +212,12 @@ fun Entity.moveWest(distance: Int) = move(localization west distance)
 fun Entity.moveEast(distance: Float) = move(localization east distance)
 fun Entity.moveEast(distance: Double) = move(localization east distance)
 fun Entity.moveEast(distance: Int) = move(localization east distance)
+
+fun Entity.setLocation(location: Location) {
+   world = location.world.handler
+   setPositionRotation(location)
+}
+
+fun Entity.spawn(force: Boolean = false) {
+   world.addEntity(this, force)
+}

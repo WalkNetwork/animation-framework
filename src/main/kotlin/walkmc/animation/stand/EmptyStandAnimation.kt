@@ -4,6 +4,7 @@ import org.bukkit.*
 import org.bukkit.entity.*
 import org.bukkit.inventory.*
 import walkmc.animation.*
+import walkmc.animation.extensions.*
 import walkmc.extensions.*
 
 /**
@@ -24,10 +25,11 @@ open class EmptyStandAnimation : BaseStandAnimation() {
  *
  * ### Note: the animation will be automatically started.
  */
-inline fun standAnimation(location: Location, block: EmptyStandAnimation.() -> Unit): EmptyStandAnimation {
+inline fun emptyAnimation(location: Location, block: EmptyStandAnimation.() -> Unit): EmptyStandAnimation {
    return EmptyStandAnimation().apply {
+      setLocation(location)
       block()
-      spawnInWorld(location, false)
+      spawn()
       start()
    }
 }
@@ -39,15 +41,16 @@ inline fun standAnimation(location: Location, block: EmptyStandAnimation.() -> U
  *
  * @param stopAfter - Stops this animation after the given amount of seconds.
  */
-inline fun standAnimation(
+inline fun emptyAnimation(
    location: Location,
    stopAfter: Int,
    block: EmptyStandAnimation.() -> Unit
 ): EmptyStandAnimation {
    return EmptyStandAnimation().apply {
+      setLocation(location)
       block()
       stopAfter(stopAfter * 20)
-      spawnInWorld(location, false)
+      spawn()
       start()
    }
 }

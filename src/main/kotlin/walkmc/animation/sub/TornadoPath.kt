@@ -11,28 +11,32 @@ import kotlin.math.*
 /**
  * Represents a tornado particle path sub animation.
  */
-open class TornadoPath(var particle: Particle, var center: Location) : SubPrimaryAnimation {
-   var angle = 0.0
-   var maxHeight = 8.0
-   var maxRadius = 3.0
+open class TornadoPath(var particle: ParticleData, var center: Location) : SubPrimaryAnimation {
+   var maxHeight = 8f
+   var maxRadius = 3f
    var lines = 4
-   var heightInc = 0.5
-   var radiusInc = maxHeight / maxRadius
+   var heightGrow = 0.5f
+   var radiusGrow = maxHeight / maxRadius
    var stopDelay = -1
    
    override fun animate(animation: Animation, ticker: Tick) {
+      val step = ticker.step
+      
       for (l in 1..lines) {
          var y = 0.0
          while (y < maxHeight) {
-            val radius = y * radiusInc
-            val x = cos(radians((360/lines*l) + y*25 - angle)) * radius
-            val z = sin(radians((360/lines*l) + y*25 - angle)) * radius
+            val radius = y * radiusGrow
+            val x = cos(radians((360/lines*l) + y*25 - step)) * radius
+            val z = sin(radians((360/lines*l) + y*25 - step)) * radius
             particle.play(center.clone().add(x, y, z))
-            y += heightInc
+            y += heightGrow
          }
       }
       
-      angle++
+      reset(animation, ticker)
+   }
+   
+   override fun reset(animation: Animation, ticker: Tick) {
       if (stopDelay > 0 && animation.ticks % stopDelay == 0) ticker.stopTick()
    }
 }
@@ -41,7 +45,7 @@ open class TornadoPath(var particle: Particle, var center: Location) : SubPrimar
  * Adds a new [TornadoPath] sub animation.
  */
 inline fun StandAnimation.tornado(
-   particle: Particle,
+   particle: ParticleData,
    start: Location = location,
    block: TornadoPath.() -> Unit
 ): TornadoPath = addSub(TornadoPath(particle, start).apply(block))
@@ -51,7 +55,7 @@ inline fun StandAnimation.tornado(
  */
 inline fun StandAnimation.tornado(
    ticks: Int,
-   particle: Particle,
+   particle: ParticleData,
    start: Location = location,
    block: TornadoPath.() -> Unit
 ): TornadoPath = addSub(ticks, TornadoPath(particle, start).apply(block))
@@ -60,7 +64,7 @@ inline fun StandAnimation.tornado(
  * Adds a new [TornadoPath] sub animation.
  */
 fun StandAnimation.tornado(
-   particle: Particle,
+   particle: ParticleData,
    start: Location = location,
 ): TornadoPath = addSub(TornadoPath(particle, start))
 
@@ -69,6 +73,42 @@ fun StandAnimation.tornado(
  */
 fun StandAnimation.tornado(
    ticks: Int,
-   particle: Particle,
+   particle: ParticleData,
    start: Location = location,
 ): TornadoPath = addSub(ticks, TornadoPath(particle, start))
+
+/**
+ * Adds a new [TornadoPath] sub animation.
+ */
+inline fun StandAnimation.tornado(
+   particle: Particle,
+   start: Location = location,
+   block: TornadoPath.() -> Unit
+): TornadoPath = addSub(TornadoPath(particle(particle), start).apply(block))
+
+/**
+ * Adds a new [TornadoPath] sub animation with an interval of [ticks].
+ */
+inline fun StandAnimation.tornado(
+   ticks: Int,
+   particle: Particle,
+   start: Location = location,
+   block: TornadoPath.() -> Unit
+): TornadoPath = addSub(ticks, TornadoPath(particle(particle), start).apply(block))
+
+/**
+ * Adds a new [TornadoPath] sub animation.
+ */
+fun StandAnimation.tornado(
+   particle: Particle,
+   start: Location = location,
+): TornadoPath = addSub(TornadoPath(particle(particle), start))
+
+/**
+ * Adds a new [TornadoPath] sub animation with an interval of [ticks].
+ */
+fun StandAnimation.tornado(
+   ticks: Int,
+   particle: Particle,
+   start: Location = location,
+): TornadoPath = addSub(ticks, TornadoPath(particle(particle), start))

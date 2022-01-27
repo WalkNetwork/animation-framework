@@ -62,8 +62,9 @@ open class MoveableAnimation : BaseStandAnimation() {
  */
 inline fun moveableAnimation(location: Location, block: MoveableAnimation.() -> Unit): MoveableAnimation {
    return MoveableAnimation().apply {
+      setLocation(location)
       block()
-      spawnInWorld(location, false)
+      spawn()
       start()
    }
 }
@@ -81,9 +82,10 @@ inline fun moveableAnimation(
    block: MoveableAnimation.() -> Unit
 ): MoveableAnimation {
    return MoveableAnimation().apply {
+      setLocation(location)
       block()
       stopAfter(stopAfter * 20)
-      spawnInWorld(location, false)
+      spawn()
       start()
    }
 }

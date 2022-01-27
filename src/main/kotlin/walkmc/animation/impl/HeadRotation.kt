@@ -40,8 +40,9 @@ open class HeadRotation : BaseStandRotation() {
  */
 inline fun headRotation(location: Location, block: HeadRotation.() -> Unit): HeadRotation {
    return HeadRotation().apply {
+      setLocation(location)
       block()
-      spawnInWorld(location, false)
+      spawn()
       start()
    }
 }
@@ -55,9 +56,10 @@ inline fun headRotation(location: Location, block: HeadRotation.() -> Unit): Hea
  */
 inline fun headRotation(location: Location, stopAfter: Int, block: HeadRotation.() -> Unit): HeadRotation {
    return HeadRotation().apply {
+      setLocation(location)
       block()
       stopAfter(stopAfter * 20)
-      spawnInWorld(location, false)
+      spawn()
       start()
    }
 }

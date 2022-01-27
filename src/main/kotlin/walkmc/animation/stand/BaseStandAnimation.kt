@@ -7,6 +7,8 @@ import org.bukkit.*
 import org.bukkit.entity.*
 import walkmc.*
 import walkmc.animation.*
+import walkmc.extensions.collections.*
+import java.util.concurrent.*
 
 /**
  * An abstract implementation of [StandAnimation].
@@ -26,7 +28,7 @@ abstract class BaseStandAnimation : EntityArmorStand(null), StandAnimation {
    
    override var starters: StartSet = LinkedHashSet()
    override var stoppers: StopSet = LinkedHashSet()
-   override var tickers: TickSet = LinkedHashSet()
+   override var tickers: TickSet = newSetFromMap(ConcurrentHashMap())
    override var clickers: ClickSet = LinkedHashSet()
    override var colliders: CollideSet = LinkedHashSet()
    
@@ -35,7 +37,6 @@ abstract class BaseStandAnimation : EntityArmorStand(null), StandAnimation {
       setGravity(false)
       isInvisible = true
       boundingBox = NullBoundingBox()
-      setSize(0.25f, 0.25f)
    }
    
    abstract fun click(player: Player, slot: Int)

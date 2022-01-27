@@ -12,29 +12,33 @@ import kotlin.math.*
  * Represents a Dampened Waves particle path sub animation.
  */
 open class DampenedWavesPath(var particle: Particle, var center: Location) : SubPrimaryAnimation {
-   var max = 16
+   var max = 16f
    var torsion = 0.0
-   var distance = 1.0
-   var torsionFetcher = 0.1 * PI
+   var distance = 1.0f
+   var grow = 0.1 * PI
    var thetaMax = 2 * PI
-   var thetaFetcher = PI / 8
-   var offsetY = 1.5
+   var thetaGrow = PI / 8
+   var offsetY = 1.5f
    var repeat = false
    
    override fun animate(animation: Animation, ticker: Tick) {
-      torsion += torsionFetcher
+      torsion += grow
       val y = exp(-0.1 * torsion) * sin(torsion) + offsetY
-      
       var theta = 0.0
       while (theta < thetaMax) {
          center.clone()
             .add(torsion * cos(theta) * distance, y, torsion * sin(theta) * distance)
             .playParticle(particle)
-         theta += thetaFetcher
+         theta += thetaGrow
       }
       
-      if (torsion > max)
+      reset(animation, ticker)
+   }
+   
+   override fun reset(animation: Animation, ticker: Tick) {
+      if (torsion > max) {
          if (!repeat) ticker.stopTick() else torsion = 0.0
+      }
    }
 }
 

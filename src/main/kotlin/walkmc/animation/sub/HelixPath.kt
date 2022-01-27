@@ -5,31 +5,32 @@ import walkmc.*
 import walkmc.animation.*
 import walkmc.animation.interfaces.*
 import walkmc.animation.stand.*
-import walkmc.extensions.*
 import kotlin.math.*
 
 /**
  * Represents a Helix particle path sub animation.
  */
 open class HelixPath(var particle: Particle, var center: Location) : SubPrimaryAnimation {
-   var max = 16
+   var max = 16f
    var torsion = 0.0
-   var distance = 1.0
-   var torsionFetcher = PI / 12
-   var torsionOffsetY = 0.16
+   var distance = 1f
+   var torsionGrow = PI / 12
+   var torsionOffsetY = 0.16f
    var allowReverseOrder = true
    var isInReverseOrder = false
    
    override fun animate(animation: Animation, ticker: Tick) {
-      torsion += if (!isInReverseOrder) torsionFetcher else -torsionFetcher
-      center.clone()
-         .add(distance * cos(torsion), torsion * torsionOffsetY, distance * sin(torsion))
-         .playParticle(particle)
-      
-      if (!allowReverseOrder)
+      torsion += if (!isInReverseOrder) torsionGrow else -torsionGrow
+      particle.play(center.clone().add(distance * cos(torsion), torsion * torsionOffsetY, distance * sin(torsion)))
+      reset(animation, ticker)
+   }
+   
+   override fun reset(animation: Animation, ticker: Tick) {
+      if (!allowReverseOrder) {
          if (torsion > max) ticker.stopTick()
-      else
+      } else {
          if (torsion > max) isInReverseOrder = true else if (torsion <= 0) isInReverseOrder = false
+      }
    }
 }
 

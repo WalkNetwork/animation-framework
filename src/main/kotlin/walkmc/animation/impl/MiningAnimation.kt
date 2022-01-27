@@ -53,8 +53,9 @@ open class MiningAnimation : BaseStandAnimation() {
  */
 inline fun miningAnimation(location: Location, block: MiningAnimation.() -> Unit): MiningAnimation {
    return MiningAnimation().apply {
+      setLocation(location)
       block()
-      spawnInWorld(location, false)
+      spawn()
       start()
    }
 }
@@ -72,9 +73,10 @@ inline fun miningAnimation(
    block: MiningAnimation.() -> Unit
 ): MiningAnimation {
    return MiningAnimation().apply {
+      setLocation(location)
       block()
       stopAfter(stopAfter * 20)
-      spawnInWorld(location, false)
+      spawn()
       start()
    }
 }

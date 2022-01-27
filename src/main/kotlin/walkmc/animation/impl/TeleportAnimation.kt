@@ -43,8 +43,9 @@ open class TeleportAnimation : BaseStandAnimation() {
  */
 inline fun teleportAnimation(location: Location, block: TeleportAnimation.() -> Unit): TeleportAnimation {
    return TeleportAnimation().apply {
+      setLocation(location)
       block()
-      spawnInWorld(location, false)
+      spawn()
       start()
    }
 }
@@ -62,9 +63,10 @@ inline fun teleportAnimation(
    block: TeleportAnimation.() -> Unit
 ): TeleportAnimation {
    return TeleportAnimation().apply {
+      setLocation(location)
       block()
       stopAfter(stopAfter * 20)
-      spawnInWorld(location, false)
+      spawn()
       start()
    }
 }
