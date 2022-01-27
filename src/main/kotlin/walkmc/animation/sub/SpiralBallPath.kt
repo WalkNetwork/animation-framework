@@ -53,7 +53,7 @@ open class SpiralBallPath(var particle: ParticleData, var center: Location) : Su
 }
 
 /**
- * Adds a new [VortexPath] sub animation.
+ * Adds a new [SpiralBallPath] sub animation.
  */
 inline fun StandAnimation.spiralBall(
    particle: ParticleData,
@@ -62,7 +62,7 @@ inline fun StandAnimation.spiralBall(
 ): SpiralBallPath = addSub(SpiralBallPath(particle, start).apply(block))
 
 /**
- * Adds a new [VortexPath] sub animation with an interval of [ticks].
+ * Adds a new [SpiralBallPath] sub animation with an interval of [ticks].
  */
 inline fun StandAnimation.spiralBall(
    ticks: Int,
@@ -72,7 +72,7 @@ inline fun StandAnimation.spiralBall(
 ): SpiralBallPath = addSub(ticks, SpiralBallPath(particle, start).apply(block))
 
 /**
- * Adds a new [VortexPath] sub animation.
+ * Adds a new [SpiralBallPath] sub animation.
  */
 fun StandAnimation.spiralBall(
    particle: ParticleData,
@@ -80,7 +80,7 @@ fun StandAnimation.spiralBall(
 ): SpiralBallPath = addSub(SpiralBallPath(particle, start))
 
 /**
- * Adds a new [VortexPath] sub animation with an interval of [ticks].
+ * Adds a new [SpiralBallPath] sub animation with an interval of [ticks].
  */
 fun StandAnimation.spiralBall(
    ticks: Int,
@@ -89,7 +89,7 @@ fun StandAnimation.spiralBall(
 ): SpiralBallPath = addSub(ticks, SpiralBallPath(particle, start))
 
 /**
- * Adds a new [VortexPath] sub animation.
+ * Adds a new [SpiralBallPath] sub animation.
  */
 inline fun StandAnimation.spiralBall(
    particle: Particle,
@@ -98,7 +98,7 @@ inline fun StandAnimation.spiralBall(
 ): SpiralBallPath = spiralBall(particle(particle), start, block)
 
 /**
- * Adds a new [VortexPath] sub animation with an interval of [ticks].
+ * Adds a new [SpiralBallPath] sub animation with an interval of [ticks].
  */
 inline fun StandAnimation.spiralBall(
    ticks: Int,
@@ -108,7 +108,7 @@ inline fun StandAnimation.spiralBall(
 ): SpiralBallPath = spiralBall(ticks, particle(particle), start, block)
 
 /**
- * Adds a new [VortexPath] sub animation.
+ * Adds a new [SpiralBallPath] sub animation.
  */
 fun StandAnimation.spiralBall(
    particle: Particle,
@@ -116,7 +116,7 @@ fun StandAnimation.spiralBall(
 ): SpiralBallPath = spiralBall(particle(particle), start)
 
 /**
- * Adds a new [VortexPath] sub animation with an interval of [ticks].
+ * Adds a new [SpiralBallPath] sub animation with an interval of [ticks].
  */
 fun StandAnimation.spiralBall(
    ticks: Int,

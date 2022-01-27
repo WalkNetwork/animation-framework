@@ -8,7 +8,7 @@ import walkmc.animation.interfaces.*
 /**
  * Represents a particle path sub animation.
  */
-open class ParticlePath(var particle: Particle, val path: List<Location>) : SubPrimaryAnimation {
+open class ParticlePath(var particle: ParticleData, val path: List<Location>) : SubPrimaryAnimation {
    var current = 0
    
    override fun animate(animation: Animation, ticker: Tick) {
@@ -21,7 +21,7 @@ open class ParticlePath(var particle: Particle, val path: List<Location>) : SubP
  * Adds a new [ParticlePath] sub animation.
  */
 fun Animation.particlePath(
-   particle: Particle,
+   particle: ParticleData,
    path: List<Location>
 ): ParticlePath = addSub(ParticlePath(particle, path))
 
@@ -30,6 +30,23 @@ fun Animation.particlePath(
  */
 fun Animation.particlePath(
    ticks: Int,
-   particle: Particle,
+   particle: ParticleData,
    path: List<Location>
 ): ParticlePath = addSub(ticks, ParticlePath(particle, path))
+
+/**
+ * Adds a new [ParticlePath] sub animation.
+ */
+fun Animation.particlePath(
+   particle: Particle,
+   path: List<Location>
+): ParticlePath = addSub(ParticlePath(particle(particle), path))
+
+/**
+ * Adds a new [ParticlePath] sub animation with an interval of [ticks].
+ */
+fun Animation.particlePath(
+   ticks: Int,
+   particle: Particle,
+   path: List<Location>
+): ParticlePath = addSub(ticks, ParticlePath(particle(particle), path))

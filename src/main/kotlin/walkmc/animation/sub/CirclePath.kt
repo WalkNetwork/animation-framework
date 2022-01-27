@@ -43,7 +43,7 @@ open class CirclePath(var particle: ParticleData, var center: Location) : SubPri
 }
 
 /**
- * Adds a new [VortexPath] sub animation.
+ * Adds a new [CirclePath] sub animation.
  */
 inline fun StandAnimation.circle(
    particle: ParticleData,
@@ -52,7 +52,7 @@ inline fun StandAnimation.circle(
 ): CirclePath = addSub(CirclePath(particle, start).apply(block))
 
 /**
- * Adds a new [VortexPath] sub animation with an interval of [ticks].
+ * Adds a new [CirclePath] sub animation with an interval of [ticks].
  */
 inline fun StandAnimation.circle(
    ticks: Int,
@@ -62,7 +62,7 @@ inline fun StandAnimation.circle(
 ): CirclePath = addSub(ticks, CirclePath(particle, start).apply(block))
 
 /**
- * Adds a new [VortexPath] sub animation.
+ * Adds a new [CirclePath] sub animation.
  */
 fun StandAnimation.circle(
    particle: ParticleData,
@@ -70,7 +70,7 @@ fun StandAnimation.circle(
 ): CirclePath = addSub(CirclePath(particle, start))
 
 /**
- * Adds a new [VortexPath] sub animation with an interval of [ticks].
+ * Adds a new [CirclePath] sub animation with an interval of [ticks].
  */
 fun StandAnimation.circle(
    ticks: Int,
@@ -79,7 +79,7 @@ fun StandAnimation.circle(
 ): CirclePath = addSub(ticks, CirclePath(particle, start))
 
 /**
- * Adds a new [VortexPath] sub animation.
+ * Adds a new [CirclePath] sub animation.
  */
 inline fun StandAnimation.circle(
    particle: Particle,
@@ -88,7 +88,7 @@ inline fun StandAnimation.circle(
 ): CirclePath = circle(particle(particle), start, block)
 
 /**
- * Adds a new [VortexPath] sub animation with an interval of [ticks].
+ * Adds a new [CirclePath] sub animation with an interval of [ticks].
  */
 inline fun StandAnimation.circle(
    ticks: Int,
@@ -98,7 +98,7 @@ inline fun StandAnimation.circle(
 ): CirclePath = circle(ticks, particle(particle), start, block)
 
 /**
- * Adds a new [VortexPath] sub animation.
+ * Adds a new [CirclePath] sub animation.
  */
 fun StandAnimation.circle(
    particle: Particle,
@@ -106,7 +106,7 @@ fun StandAnimation.circle(
 ): CirclePath = circle(particle(particle), start)
 
 /**
- * Adds a new [VortexPath] sub animation with an interval of [ticks].
+ * Adds a new [CirclePath] sub animation with an interval of [ticks].
  */
 fun StandAnimation.circle(
    ticks: Int,

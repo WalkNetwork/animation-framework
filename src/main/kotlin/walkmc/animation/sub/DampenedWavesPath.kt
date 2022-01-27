@@ -5,13 +5,12 @@ import walkmc.*
 import walkmc.animation.*
 import walkmc.animation.interfaces.*
 import walkmc.animation.stand.*
-import walkmc.extensions.*
 import kotlin.math.*
 
 /**
  * Represents a Dampened Waves particle path sub animation.
  */
-open class DampenedWavesPath(var particle: Particle, var center: Location) : SubPrimaryAnimation {
+open class DampenedWavesPath(var particle: ParticleData, var center: Location) : SubPrimaryAnimation {
    var max = 16f
    var torsion = 0.0
    var distance = 1.0f
@@ -26,9 +25,7 @@ open class DampenedWavesPath(var particle: Particle, var center: Location) : Sub
       val y = exp(-0.1 * torsion) * sin(torsion) + offsetY
       var theta = 0.0
       while (theta < thetaMax) {
-         center.clone()
-            .add(torsion * cos(theta) * distance, y, torsion * sin(theta) * distance)
-            .playParticle(particle)
+         particle.play(center.clone().add(torsion * cos(theta) * distance, y, torsion * sin(theta) * distance))
          theta += thetaGrow
       }
       
@@ -46,7 +43,7 @@ open class DampenedWavesPath(var particle: Particle, var center: Location) : Sub
  * Adds a new [DampenedWavesPath] sub animation.
  */
 inline fun StandAnimation.dampenedWaves(
-   particle: Particle,
+   particle: ParticleData,
    start: Location = location,
    block: DampenedWavesPath.() -> Unit
 ): DampenedWavesPath = addSub(DampenedWavesPath(particle, start).apply(block))
@@ -56,7 +53,7 @@ inline fun StandAnimation.dampenedWaves(
  */
 inline fun StandAnimation.dampenedWaves(
    ticks: Int,
-   particle: Particle,
+   particle: ParticleData,
    start: Location = location,
    block: DampenedWavesPath.() -> Unit
 ): DampenedWavesPath = addSub(ticks, DampenedWavesPath(particle, start).apply(block))
@@ -65,7 +62,7 @@ inline fun StandAnimation.dampenedWaves(
  * Adds a new [DampenedWavesPath] sub animation.
  */
 fun StandAnimation.dampenedWaves(
-   particle: Particle,
+   particle: ParticleData,
    start: Location = location,
 ): DampenedWavesPath = addSub(DampenedWavesPath(particle, start))
 
@@ -74,6 +71,42 @@ fun StandAnimation.dampenedWaves(
  */
 fun StandAnimation.dampenedWaves(
    ticks: Int,
-   particle: Particle,
+   particle: ParticleData,
    start: Location = location,
 ): DampenedWavesPath = addSub(ticks, DampenedWavesPath(particle, start))
+
+/**
+ * Adds a new [DampenedWavesPath] sub animation.
+ */
+inline fun StandAnimation.dampenedWaves(
+   particle: Particle,
+   start: Location = location,
+   block: DampenedWavesPath.() -> Unit
+): DampenedWavesPath = addSub(DampenedWavesPath(particle(particle), start).apply(block))
+
+/**
+ * Adds a new [DampenedWavesPath] sub animation with an interval of [ticks].
+ */
+inline fun StandAnimation.dampenedWaves(
+   ticks: Int,
+   particle: Particle,
+   start: Location = location,
+   block: DampenedWavesPath.() -> Unit
+): DampenedWavesPath = addSub(ticks, DampenedWavesPath(particle(particle), start).apply(block))
+
+/**
+ * Adds a new [DampenedWavesPath] sub animation.
+ */
+fun StandAnimation.dampenedWaves(
+   particle: Particle,
+   start: Location = location,
+): DampenedWavesPath = addSub(DampenedWavesPath(particle(particle), start))
+
+/**
+ * Adds a new [DampenedWavesPath] sub animation with an interval of [ticks].
+ */
+fun StandAnimation.dampenedWaves(
+   ticks: Int,
+   particle: Particle,
+   start: Location = location,
+): DampenedWavesPath = addSub(ticks, DampenedWavesPath(particle(particle), start))
