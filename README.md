@@ -62,12 +62,13 @@ moveableAnimation(location) {
 ## Sub Animations
 * ItemCycle
 * ParticlePath
+* HelixPath
+* DampenedWavesPath
+* TornadoPath
 
 ## Showcase:
 ```kt
-moveableAnimation(location) {
-  withItem(item)
-  
+emptyAnimation(location) {
   // add ItemCycle sub animation changing the item displayed every 20 ticks
   cycle(20) {
     addCycle(Materials.STONE)
@@ -77,13 +78,48 @@ moveableAnimation(location) {
 ```
 
 ```kt
-headRotation(location) {
-  withItem(item)
+emptyAnimation(location) {
   // add ParticlePath to display Flames particle in a circle of 1.0 radius and 10 points
   particlePath(Particle.FLAME, location.drawCirclePath(radius = 1.0, amount = 10))
 }
 ```
 
+```kt
+emptyAnimation(location) {
+  // add helix path sub animation
+  helix(Particle.FLAME) {
+    allowReverseOrder = true
+  }
+  
+  // simplest
+  helix(Particle.FLAME)
+}
+```
+
+```kt
+emptyAnimation(location) {
+  // add helix path sub animation
+  dampenedWaves(Particle.FLAME) {
+    repeat = true
+  }
+  
+  // simplest
+  dampenedWaves(Particle.FLAME)
+}
+```
+
+```kt
+emptyAnimation(location) {
+  // add tornado path sub animation
+  tornado(Particle.FLAME) {
+    maxHeight = 20.0
+    lines = 6
+  }
+  
+  // simplest
+  tornado(Particle.FLAME)
+}
+```
 
 
 
