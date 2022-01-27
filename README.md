@@ -65,6 +65,9 @@ moveableAnimation(location) {
 * HelixPath
 * DampenedWavesPath
 * TornadoPath
+* SpiralBallPath
+* CirclePath
+* VortexPath
 
 ## Showcase:
 ```kt
